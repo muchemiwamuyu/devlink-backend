@@ -1,5 +1,7 @@
 import dotenv from 'dotenv';
 import pkg from 'pg';
+
+
 const { Pool } = pkg;
 
 dotenv.config();
@@ -12,21 +14,5 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
-
-// ensure users table exist
-(async () => {
-  try {
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS users (
-        id SERIAL PRIMARY KEY,
-        name VARCHAR(100) NOT NULL,
-        email VARCHAR(150) UNIQUE NOT NULL
-      );
-    `);
-    console.log('Table "users" is ready.');
-  } catch (error) {
-    console.error('Error creating table:', error);
-  }
-})();
 
 export default pool;
